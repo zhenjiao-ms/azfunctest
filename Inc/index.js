@@ -14,7 +14,9 @@ module.exports = async function (context, req) {
       };
       
     if (req.query.name || (req.body && req.body.name)) {
-        const { endpoint, key, databaseId, containerId } = config;
+        const { endpoint, databaseId, containerId } = config;
+        
+        const key = process.env["KeyToDB"];
         
         const client = new CosmosClient({ endpoint, key });
         const database = client.database(databaseId);
@@ -22,7 +24,7 @@ module.exports = async function (context, req) {
       
         // Make sure Tasks database is already setup. If not, create it.
         await dbContext.create(client, databaseId, containerId);
-        
+
       
         try {
           // Create a new item
