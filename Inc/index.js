@@ -22,6 +22,7 @@ module.exports = async function (context, req) {
       
         // Make sure Tasks database is already setup. If not, create it.
         await dbContext.create(client, databaseId, containerId);
+        
       
         try {
           // Create a new item
