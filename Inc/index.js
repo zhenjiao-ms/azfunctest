@@ -22,7 +22,7 @@ module.exports = async function (context, req) {
         const container = database.container(containerId);
       
         // Make sure Tasks database is already setup. If not, create it.
-        //await dbContext.create(client, databaseId, containerId);
+        await dbContext.create(client, databaseId, containerId);
 
       
         try {
