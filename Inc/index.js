@@ -30,7 +30,7 @@ module.exports = async function (context, req) {
           console.log(`Created item: %s`, createdItem);
       
           const { id, video } = createdItem;
-          createdItem.viewedCount++;
+          createdItem.viewedCount = 1;
           const { resource: updatedItem } = await container
             .item(id, video)
             .replace(createdItem);      
