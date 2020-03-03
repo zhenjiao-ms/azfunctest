@@ -6,11 +6,9 @@ module.exports = async function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.');
 
     const newItem = {
-        id: "3",
-        category: "fun",
-        name: "Cosmos DB",
-        description: "Complete Cosmos DB Node.js Quickstart ⚡",
-        isComplete: false
+        id: "teacher",
+        video: "azure",
+        viewedCount: "0",
       };
       
     if (req.query.name || (req.body && req.body.name)) {
@@ -23,7 +21,7 @@ module.exports = async function (context, req) {
         const container = database.container(containerId);
       
         // Make sure Tasks database is already setup. If not, create it.
-        await dbContext.create(client, databaseId, containerId);
+        //await dbContext.create(client, databaseId, containerId);
 
       
         try {
@@ -31,7 +29,11 @@ module.exports = async function (context, req) {
           const { resource: createdItem } = await container.items.create(newItem);
           console.log(`Created item: %s`, createdItem);
       
-          const { id, category } = createdItem;
+          const { id, video } = createdItem;
+          createdItem.viewedCount++;
+          const { resource: updatedItem } = await container
+            .item(id, video)
+            .replace(createdItem);      
       
         }catch (err) {
             console.log(err.message);
