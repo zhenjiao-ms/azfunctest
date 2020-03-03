@@ -8,7 +8,7 @@ module.exports = async function (context, req) {
     const newItem = {
         id: "teacher",
         video: "azure",
-        viewedCount: "0",
+        viewedCount: "1",
       };
       
     if (req.query.name || (req.body && req.body.name)) {
@@ -26,14 +26,13 @@ module.exports = async function (context, req) {
       
         try {
           // Create a new item
-          const { resource: createdItem } = await container.items.create(newItem);
+          /*const { resource: createdItem } = await container.items.create(newItem);
           console.log(`Created item: %s`, createdItem);
-      
-          const { id, video } = createdItem;
-          createdItem.viewedCount = 1;
+            */
+          const { id, video } = newItem;
           const { resource: updatedItem } = await container
             .item(id, video)
-            .replace(createdItem);      
+            .replace(newItem);      
       
         }catch (err) {
             console.log(err.message);
