@@ -6,9 +6,10 @@ module.exports = async function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.');
 
     const newItem = {
-        id: "teacher",
+        id: "1",
+        owner:"teacher",
         video: "azure",
-        viewedCount: "1",
+        viewedCount: "0",
       };
       
     if (req.query.name || (req.body && req.body.name)) {
@@ -26,13 +27,14 @@ module.exports = async function (context, req) {
       
         try {
           // Create a new item
-          /*const { resource: createdItem } = await container.items.create(newItem);
+          const { resource: createdItem } = await container.items.create(newItem);
           console.log(`Created item: %s`, createdItem);
-            */
-          const { id, video } = newItem;
+
+          const { id, owner, video } = createdItem;
+          createdItem.viewedCount++;
           const { resource: updatedItem } = await container
-            .item(id, video)
-            .replace(newItem);      
+            .item(id, owner, video)
+            .replace(createdItem);      
       
         }catch (err) {
             console.log(err.message);
