@@ -28,13 +28,16 @@ module.exports = async function (context, req) {
         try {
           // Create a new item
           const { resource: createdItem } = await container.items.create(newItem);
-          const {id} = createdItem;
+          console.log(`Created item: ${createdItem.id} - ${createdItem.owner}`); 
+          console.log(`Created count to ${createdItem.viewedCount}\r\n`);      
+        const {id} = createdItem;
           createdItem.viewedCount = "2";
 
-          await container
+          const { resource: updatedItem } = await container
             .item(id)
             .replace(createdItem);          
-      
+            console.log(`Updated item: ${updatedItem.id} - ${updatedItem.owner}`); 
+            console.log(`Updated count to ${updatedItem.viewedCount}\r\n`);      
         }catch (err) {
             console.log(err.message);
         }
