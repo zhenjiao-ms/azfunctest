@@ -3,7 +3,7 @@ const config = require("./config");
 const dbContext = require("./databaseContext");
 
 module.exports = async function (context, req) {
-    context.log('JavaScript HTTP trigger function processed a request.');
+    console.log('JavaScript HTTP trigger function processed a request.');
 
     const newItem = {
         id: "student",
