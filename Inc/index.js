@@ -28,6 +28,12 @@ module.exports = async function (context, req) {
         try {
           // Create a new item
           const { resource: createdItem } = await container.items.create(newItem);
+          const {id} = createdItem;
+          createdItem.viewedCount = "2";
+
+          await container
+            .item(id)
+            .replace(createdItem);          
       
         }catch (err) {
             console.log(err.message);
