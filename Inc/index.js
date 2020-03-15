@@ -20,26 +20,28 @@ module.exports = async function (context, req) {
         const client = new CosmosClient({ endpoint, key });
         const database = client.database(databaseId);
         const container = database.container(containerId);
+        context.log(`start`); 
       
         // Make sure Tasks database is already setup. If not, create it.
         await dbContext.create(client, databaseId, containerId);
+        context.log(`db created`); 
 
       
         try {
           // Create a new item
           const { resource: createdItem } = await container.items.create(newItem);
-          console.log(`Created item: ${createdItem.id} - ${createdItem.owner}`); 
-          console.log(`Created count to ${createdItem.viewedCount}\r\n`);      
+          context.log(`Created item: ${createdItem.id} - ${createdItem.owner}`); 
+          context.log(`Created count to ${createdItem.viewedCount}\r\n`);      
         const {id} = createdItem;
           createdItem.viewedCount = "2";
 
           const { resource: updatedItem } = await container
             .item(id)
             .replace(createdItem);          
-            console.log(`Updated item: ${updatedItem.id} - ${updatedItem.owner}`); 
-            console.log(`Updated count to ${updatedItem.viewedCount}\r\n`);      
+            context.log(`Updated item: ${updatedItem.id} - ${updatedItem.owner}`); 
+            context.log(`Updated count to ${updatedItem.viewedCount}\r\n`);      
         }catch (err) {
-            console.log(err.message);
+            context.log(err.message);
         }
       
         context.res = {
